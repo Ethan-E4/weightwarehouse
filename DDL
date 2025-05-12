@@ -1,0 +1,17 @@
+USE WEIGHTS;
+
+DROP TABLE IF EXISTS items;
+
+CREATE TABLE items(
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_name VARCHAR(255) NOT NULL,
+    item_desc VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    image_path VARCHAR(255) NOT NULL
+);
+
+INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
+'45 LB Plate',
+'45 pound steel weight.',
+'plate',
+'weight_placeholder.jpg');
