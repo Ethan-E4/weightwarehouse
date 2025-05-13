@@ -1,5 +1,6 @@
 USE WEIGHTS;
 
+DROP TABLE IF EXISTS inventory;
 DROP TABLE IF EXISTS items;
 
 CREATE TABLE items(
@@ -14,157 +15,157 @@ CREATE TABLE items(
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '45 LB Plate',
 'A set of two 45 pound steel weights.',
-'plate',
+'Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '35 LB Plate',
 'A set of two 35 pound steel weights.',
-'plate',
+'Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '25 LB Plate',
 'A set of two 25 pound steel weights.',
-'plate',
+'Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '10 LB Plate',
 'A set of two 10 pound steel weights.',
-'plate',
+'Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '5 LB Plate',
 'A set of two 5 pound steel weights.',
-'plate',
+'Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '2.5 LB Plate',
 'A set of two 2.5 pound steel weights.',
-'plate',
+'Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '45 LB Bar',
 '45 pound steel olympic barbell.',
-'bar',
+'Bar',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '35 LB Bar',
 '35 pound steel olympic barbell.',
-'bar',
+'Bar',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 'Barbell Clamp',
 'Barbell clamp for olympic barbell',
-'clamp',
+'Clamp',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 'Olympic Weight Set',
 'Comes with barbell and 2 steel plates.',
-'set',
+'Set',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 'Dumbbell Weight Set',
 'Steel dumbbell weight set. Includes 5-50 pounds (Optional rack).',
-'set',
+'Set',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 'Bumper Plate Set',
 'Comes with barbell and 2 bumper plates.',
-'set',
+'Set',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '45 LB Bumper Plate',
 '45 pound rubber coated bumper plate.',
-'bumper',
+'Bumper Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '35 LB Bumper Plate',
 '35 pound rubber coated bumper plate.',
-'bumper',
+'Bumper Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '25 LB Bumper Plate',
 '45 pound rubber coated bumper plate.',
-'bumper',
+'Bumper Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '25 LB Bumper Plate',
 '25 pound rubber coated bumper plate.',
-'bumper',
+'Bumper Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '10 LB Bumper Plate',
 '10 pound rubber coated bumper plate.',
-'bumper',
+'Bumper Plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '55 LB Dumbbell',
 'Set of two 55 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '60 LB Dumbbell',
 'Set of two 60 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '65 LB Dumbbell',
 'Set of two 65 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '70 LB Dumbbell',
 'Set of two 70 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '75 LB Dumbbell',
 'Set of two 75 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '80 LB Dumbbell',
 'Set of two 80 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '85 LB Dumbbell',
 'Set of two 85 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '90 LB Dumbbell',
 'Set of two 90 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '100 LB Dumbbell',
 'Set of two 100 pound dumbbells.',
-'dumbbell',
+'Dumbbell',
 'images/weight_placeholder.jpg');
 
 DROP TABLE IF EXISTS inventory;
