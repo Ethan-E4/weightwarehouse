@@ -13,37 +13,37 @@ CREATE TABLE items(
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '45 LB Plate',
-'45 pound steel weight.',
+'A set of two 45 pound steel weights.',
 'plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '35 LB Plate',
-'35 pound steel weight.',
+'A set of two 35 pound steel weights.',
 'plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '25 LB Plate',
-'25 pound steel weight.',
+'A set of two 25 pound steel weights.',
 'plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '10 LB Plate',
-'10 pound steel weight.',
+'A set of two 10 pound steel weights.',
 'plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '5 LB Plate',
-'5 pound steel weight.',
+'A set of two 5 pound steel weights.',
 'plate',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 '2.5 LB Plate',
-'2.5 pound steel weight.',
+'A set of two 2.5 pound steel weights.',
 'plate',
 'images/weight_placeholder.jpg');
 
@@ -84,31 +84,31 @@ INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'45b LB Bumper Plate',
+'45 LB Bumper Plate',
 '45 pound rubber coated bumper plate.',
 'bumper',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'35b LB Bumper Plate',
+'35 LB Bumper Plate',
 '35 pound rubber coated bumper plate.',
 'bumper',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'25b LB Bumper Plate',
+'25 LB Bumper Plate',
 '45 pound rubber coated bumper plate.',
 'bumper',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'25b LB Bumper Plate',
+'25 LB Bumper Plate',
 '25 pound rubber coated bumper plate.',
 'bumper',
 'images/weight_placeholder.jpg');
 
 INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'10b LB Bumper Plate',
+'10 LB Bumper Plate',
 '10 pound rubber coated bumper plate.',
 'bumper',
 'images/weight_placeholder.jpg');

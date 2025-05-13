@@ -105,7 +105,7 @@
             echo "<div class='item-card'>";
             echo "<img src='" . $item["image_path"] . "' alt='" . $item["item_name"] . "' class='item-image'>";
             echo "<h1>" . $item["item_name"] . "</h1>";
-            echo "<p>" . $item['item_desc'] . "</p>";
+            echo "<p> $" . $item['price'] . "</p>";
             echo "</div>";
             echo "</a>";
         }
