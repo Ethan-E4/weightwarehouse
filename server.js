@@ -22,7 +22,7 @@ app.get('/:page', (req, res) => {
 
 // Serve index.html when visiting "/"
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.php'));
 });
 
 // Start server
