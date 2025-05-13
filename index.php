@@ -1,116 +1,193 @@
 <html>
 <head>
     <style>
+        /* Reset & global */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-
-        h1 {
-            font-size: 24px;
             color: #333;
-            margin-bottom: 10px;
         }
+        a { text-decoration: none; color: inherit; }
 
-        p {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.5;
-        }
-
-        a {
-        text-decoration: none;     
-        color: inherit;            
-        }
-
-        .item-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
+        /* Header */
+        header {
+            background: #2c3e50;
+            color: #fff;
             padding: 20px;
+            text-align: center;
+        }
+        header h1 { font-size: 32px; }
+
+        /* Filter bar */
+        .filter-bar {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .filter-bar select,
+        .filter-bar button {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #bbb;
+        }
+        .filter-bar button {
+            background: #2c3e50;
+            color: #fff;
+            cursor: pointer;
         }
 
+        /* Grid */
+        .item-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        /* Card */
         .item-card {
             background-color: #fff;
             border-radius: 8px;
             border: 1px solid #ddd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             overflow: hidden;
-            width: 250px;
-            text-align: center;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
             transition: transform 0.3s ease;
         }
-
-        .item-card:hover {
-            transform: translateY(-5px);
-        }
-
+        .item-card:hover { transform: translateY(-5px); }
         .item-image {
             width: 100%;
-            height: 200px;
+            height: 160px;
             object-fit: cover;
-            border-radius: 8px;
         }
-
-        .item-card h1 {
-            font-size: 20px;
-            margin-top: 15px;
+        .item-body {
+            flex: 1;
+            padding: 15px;
         }
-
-        .item-card p {
+        .item-body h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .item-body .price {
+            color: #2c7a7b;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .item-body .desc {
             font-size: 14px;
             color: #555;
-            margin-top: 10px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .item-body .types {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
+<header>
+    <h1>Weight Warehouse</h1>
+</header>
+
 <?php
-    $host = '127.0.0.1';       // or 'localhost'
-    $db   = 'WEIGHTS';         // your database name
-    $user = 'test_user';       // your DB username
-    $pass = 'password';        // your DB password
+// DATABASE CONNECTION
+$host = '127.0.0.1';
+$db   = 'WEIGHTS';
+$user = 'test_user';
+$pass = 'password';
+$dsn  = "mysql:host=$host;dbname=$db;charset=utf8";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+$pdo = new PDO($dsn, $user, $pass, $options);
 
-    $dsn = "mysql:host=$host;dbname=$db;";
-
-    $options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // better error reporting
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // return associative arrays
-        PDO::ATTR_EMULATE_PREPARES   => false,                  // use native prepares
-    ];
-
-    try {
-        $pdo = new PDO($dsn, $user, $pass, $options);
-        // echo "Database connection successful."; // Removed for cleaner UI
-    } catch (PDOException $e) {
-        echo "Database connection failed: " . $e->getMessage();
+// BUILD TYPE LIST
+$typeList = [];
+$typeStmt = $pdo->query("SELECT `type` FROM items");
+while ($row = $typeStmt->fetch()) {
+    foreach (explode(',', $row['type']) as $t) {
+        $t = trim($t);
+        if ($t && !in_array($t, $typeList, true)) {
+            $typeList[] = $t;
+        }
     }
+}
+sort($typeList);
 
-    // Fetching items from the database
-    $sql = "SELECT item_id, item_name, item_desc, image_path, price FROM items";
+// GET CURRENT FILTER
+$selectedType = $_GET['type'] ?? '';
+
+// FETCH ITEMS WITH OPTIONAL FILTER
+if ($selectedType && in_array($selectedType, $typeList, true)) {
+    $sql = "SELECT * FROM items WHERE `type` LIKE :t";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->execute(['t' => "%{$selectedType}%"]);
+} else {
+    $stmt = $pdo->query("SELECT * FROM items");
+}
 ?>
 
-<div class="item-container">
-    <?php
-        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<a href='itemview.php?id=" . $item['item_id'] . "'>";
-            echo "<div class='item-card'>";
-            echo "<img src='" . $item["image_path"] . "' alt='" . $item["item_name"] . "' class='item-image'>";
-            echo "<h1>" . $item["item_name"] . "</h1>";
-            echo "<p> $" . $item['price'] . "</p>";
-            echo "</div>";
-            echo "</a>";
-        }
-    ?>
+<div class="filter-bar">
+    <form method="get" style="display:flex; align-items:center; gap:10px;">
+        <label for="type">Filter by type:</label>
+        <select name="type" id="type">
+            <option value="">All</option>
+            <?php foreach ($typeList as $t): ?>
+                <option value="<?= htmlspecialchars($t) ?>"
+                    <?= $t === $selectedType ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($t) ?>
+                </option>
+            <?php endforeach ?>
+        </select>
+        <button type="submit">Apply</button>
+    </form>
 </div>
+
+<div class="item-container">
+    <?php while ($item = $stmt->fetch()): ?>
+        <a href="itemview.php?id=<?= $item['item_id'] ?>">
+            <div class="item-card">
+                <img src="<?= htmlspecialchars($item['image_path']) ?>"
+                     alt="<?= htmlspecialchars($item['item_name']) ?>"
+                     class="item-image">
+                <div class="item-body">
+                    <h2><?= htmlspecialchars($item['item_name']) ?></h2>
+                    <div class="price">$<?= number_format($item['price'],2) ?></div>
+                    <div class="desc"><?= htmlspecialchars($item['item_desc']) ?></div>
+                    <div class="types">
+                        Types:
+                        <?= htmlspecialchars($item['type']) ?>
+                    </div>
+                </div>
+            </div>
+        </a>
+    <?php endwhile ?>
+</div>
+
+<footer>
+    &copy; <?= date('Y') ?> Weight Warehouse. All rights reserved.
+</footer>
 
 </body>
 </html>

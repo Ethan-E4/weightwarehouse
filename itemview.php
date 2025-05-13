@@ -56,6 +56,10 @@
 
 <body>
 
+<form method="post">
+    <input type="submit" value="back">
+</form>
+
 <?php
 $host = '127.0.0.1';
 $db   = 'WEIGHTS';
@@ -100,6 +104,15 @@ echo "<div class='description'>" . nl2br(htmlspecialchars($item['item_desc'])) .
 echo "</div>";
 echo "</div>";
 ?>
-
 </body>
+
+<?php
+
+if($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    header('Location: index.php');
+    exit;
+}
+
+?>
 </html>
