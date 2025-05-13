@@ -176,7 +176,7 @@ if ($selectedType && in_array($selectedType, $typeList, true)) {
                     <div class="price">$<?= number_format($item['price'],2) ?></div>
                     <div class="desc"><?= htmlspecialchars($item['item_desc']) ?></div>
                     <div class="types">
-                        Types:
+                        Type:
                         <?= htmlspecialchars($item['type']) ?>
                     </div>
                 </div>
@@ -186,8 +186,14 @@ if ($selectedType && in_array($selectedType, $typeList, true)) {
 </div>
 
 <footer>
+    <div style="margin-bottom: 10px;">
+        <a href="about.php" style="color: #fff; margin: 0 10px;">About Us</a> |
+        <a href="contact.php" style="color: #fff; margin: 0 10px;">Contact Us</a> |
+        <a href="pickup-policy.php" style="color: #fff; margin: 0 10px;">Pickup Policy</a>
+    </div>
     &copy; <?= date('Y') ?> Weight Warehouse. All rights reserved.
 </footer>
+
 
 </body>
 </html>
