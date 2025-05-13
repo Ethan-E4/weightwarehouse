@@ -20,6 +20,11 @@
             line-height: 1.5;
         }
 
+        a {
+        text-decoration: none;     
+        color: inherit;            
+        }
+
         .item-container {
             display: flex;
             flex-wrap: wrap;
@@ -88,7 +93,7 @@
     }
 
     // Fetching items from the database
-    $sql = "SELECT item_name, item_desc, image_path FROM items";
+    $sql = "SELECT item_id, item_name, item_desc, image_path, price FROM items";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 ?>
@@ -96,11 +101,13 @@
 <div class="item-container">
     <?php
         while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<a href='itemview.php?id=" . $item['item_id'] . "'>";
             echo "<div class='item-card'>";
             echo "<img src='" . $item["image_path"] . "' alt='" . $item["item_name"] . "' class='item-image'>";
             echo "<h1>" . $item["item_name"] . "</h1>";
             echo "<p>" . $item['item_desc'] . "</p>";
             echo "</div>";
+            echo "</a>";
         }
     ?>
 </div>
