@@ -151,32 +151,32 @@ INSERT INTO categories (category_name, parent_category_id) VALUES
 -- Insert all original items with the enhanced schema
 INSERT INTO items(item_name, item_desc, type, category_id, image_path, price, is_active, weight) VALUES 
 -- Steel plates (category_id 6)
-('45 LB Plate', 'A set of two 45 pound steel weights.', 'Plate', 6, 'images/45lb_plate.jpeg', 89.99, TRUE, 90),
+('45 LB Plate', 'A set of two 45 pound steel weights.', 'Plate', 6, 'images/45_plate.jpg', 89.99, TRUE, 90),
 ('35 LB Plate', 'A set of two 35 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 69.99, TRUE, 70),
-('25 LB Plate', 'A set of two 25 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 49.99, TRUE, 50),
-('10 LB Plate', 'A set of two 10 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 29.99, TRUE, 20),
-('5 LB Plate', 'A set of two 5 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 19.99, TRUE, 10),
-('2.5 LB Plate', 'A set of two 2.5 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 14.99, TRUE, 5),
+('25 LB Plate', 'A set of two 25 pound steel weights.', 'Plate', 6, 'images/25_plate.jpg', 49.99, TRUE, 50),
+('10 LB Plate', 'A set of two 10 pound steel weights.', 'Plate', 6, 'images/10_plate.jpg', 29.99, TRUE, 20),
+('5 LB Plate', 'A set of two 5 pound steel weights.', 'Plate', 6, 'images/5_plate.jpg', 19.99, TRUE, 10),
+('2.5 LB Plate', 'A set of two 2.5 pound steel weights.', 'Plate', 6, 'images/2.5_plate.jpg', 14.99, TRUE, 5),
 
 -- Bumper plates (category_id 7)
-('45 LB Bumper Plate', '45 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/45lb_bumper.jpeg', 129.99, TRUE, 45),
-('35 LB Bumper Plate', '35 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/35lb_bumper.jpeg', 99.99, TRUE, 35),
-('25 LB Bumper Plate', '25 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/25lb_bumper.jpeg', 79.99, TRUE, 25),
-('10 LB Bumper Plate', '10 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/weight_placeholder.jpg', 49.99, TRUE, 10),
+('45 LB Bumper Plate', '45 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/45_bumper.jpg', 129.99, TRUE, 45),
+('35 LB Bumper Plate', '35 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/35_bumper.jpg', 99.99, TRUE, 35),
+('25 LB Bumper Plate', '25 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/25_bumper.jpg', 79.99, TRUE, 25),
+('10 LB Bumper Plate', '10 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/10_bumper.jpg', 49.99, TRUE, 10),
 
 -- Bars (category_id 2)
-('45 LB Bar', '45 pound steel olympic barbell.', 'Bar', 2, 'images/weight_placeholder.jpg', 199.99, TRUE, 45),
-('35 LB Bar', '35 pound steel olympic barbell.', 'Bar', 2, 'images/weight_placeholder.jpg', 179.99, TRUE, 35),
+('45 LB Bar', '45 pound steel olympic barbell.', 'Bar', 2, 'images/barbell_2.jpg', 199.99, TRUE, 45),
+('35 LB Bar', '35 pound steel olympic barbell.', 'Bar', 2, 'images/barbell_2.jpg', 179.99, TRUE, 35),
 
 -- Accessories (category_id 3)
 ('Barbell Clamp', 'Barbell clamp for olympic barbell', 'Clamp', 3, 'images/weight_placeholder.jpg', 19.99, TRUE, 1),
 
 -- Weight sets (category_id 4)
-('Olympic Weight Set', 'Comes with barbell and 2 steel plates.', 'Set', 4, 'images/complete_bb_set.jpeg', 299.99, TRUE, 235),
+('Olympic Weight Set', 'Comes with barbell and 2 steel plates.', 'Set', 4, 'images/full_plates.jpg', 299.99, TRUE, 235),
 ('Complete Olympic Weight Set', 'Comes with barbell and a full set of steel weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/complete_bb_set.jpeg', 599.99, TRUE, 320),
 ('Complete Bumper Plate Olympic Weight Set', 'Comes with barbell and a full set of bumper plate weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/complete_bumper_bb_set.jpeg', 899.99, TRUE, 320),
-('Dumbbell Weight Set', 'Steel dumbbell weight set. Includes 5-50 pounds (Optional rack).', 'Set', 4, 'images/5-50db.jpeg', 699.99, TRUE, 550),
-('Bumper Plate Set', 'Comes with barbell and 2 bumper plates.', 'Set', 4, 'images/weight_placeholder.jpg', 349.99, TRUE, 235),
+('Dumbbell Weight Set', 'Steel dumbbell weight set. Includes 5-50 pounds (Optional rack).', 'Set', 4, 'images/5-50db_rack_2.jpg', 699.99, TRUE, 550),
+('Bumper Plate Set', 'Comes with barbell and 2 bumper plates.', 'Set', 4, 'images/bumper_set.jpg', 349.99, TRUE, 235),
 
 -- Dumbbells (category_id 5)
 ('55 LB Dumbbell', 'Set of two 55 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 109.99, TRUE, 110),
