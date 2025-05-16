@@ -1,193 +1,206 @@
 USE WEIGHTS;
 
+-- Drop tables in reverse order of dependencies
+DROP TABLE IF EXISTS cart_items;
+DROP TABLE IF EXISTS carts;
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS inventory;
 DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE items(
-    item_id INT AUTO_INCREMENT PRIMARY KEY,
-    item_name VARCHAR(255) NOT NULL,
-    item_desc VARCHAR(255) NOT NULL,
-    type VARCHAR(255) NOT NULL,
-    image_path VARCHAR(255) NOT NULL,
-    price DECIMAL(10,2) NOT NULL DEFAULT 0.00
+-- Categories Table
+CREATE TABLE categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL,
+    parent_category_id INT,
+    FOREIGN KEY (parent_category_id) REFERENCES categories(category_id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
 );
 
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'45 LB Plate',
-'A set of two 45 pound steel weights.',
-'Plate',
-'images/45lb_plate.jpeg');
+-- Items Table (Enhanced)
+CREATE TABLE items (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_name VARCHAR(255) NOT NULL,
+    item_desc TEXT NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    category_id INT,
+    image_path VARCHAR(255) NOT NULL,
+    price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,  -- Controls visibility on shop page
+    weight DECIMAL(10,2),                     -- Item weight in pounds
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
 
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'35 LB Plate',
-'A set of two 35 pound steel weights.',
-'Plate',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'25 LB Plate',
-'A set of two 25 pound steel weights.',
-'Plate',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'10 LB Plate',
-'A set of two 10 pound steel weights.',
-'Plate',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'5 LB Plate',
-'A set of two 5 pound steel weights.',
-'Plate',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'2.5 LB Plate',
-'A set of two 2.5 pound steel weights.',
-'Plate',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'45 LB Bar',
-'45 pound steel olympic barbell.',
-'Bar',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'35 LB Bar',
-'35 pound steel olympic barbell.',
-'Bar',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'Barbell Clamp',
-'Barbell clamp for olympic barbell',
-'Clamp',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'Olympic Weight Set',
-'Comes with barbell and 2 steel plates.',
-'Set',
-'images/complete_bb_set.jpeg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'Complete Olympic Weight Set',
-'Comes with barbell and a full set of steel weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.',
-'Set',
-'images/complete_bb_set.jpeg');
-
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'Complete Bumper Plate Olympic Weight Set',
-'Comes with barbell and a full set of bumper plate weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.',
-'Set',
-'images/complete_bumper_bb_set.jpeg');
-
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'Dumbbell Weight Set',
-'Steel dumbbell weight set. Includes 5-50 pounds (Optional rack).',
-'Set',
-'images/5-50db.jpeg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'Bumper Plate Set',
-'Comes with barbell and 2 bumper plates.',
-'Set',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'45 LB Bumper Plate',
-'45 pound rubber coated bumper plate.',
-'Bumper Plate',
-'images/45lb_bumper.jpeg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'35 LB Bumper Plate',
-'35 pound rubber coated bumper plate.',
-'Bumper Plate',
-'images/35lb_bumper.jpeg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'25 LB Bumper Plate',
-'25 pound rubber coated bumper plate.',
-'Bumper Plate',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'25 LB Bumper Plate',
-'25 pound rubber coated bumper plate.',
-'Bumper Plate',
-'images/25lb_bumper.jpeg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'10 LB Bumper Plate',
-'10 pound rubber coated bumper plate.',
-'Bumper Plate',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'55 LB Dumbbell',
-'Set of two 55 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'60 LB Dumbbell',
-'Set of two 60 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'65 LB Dumbbell',
-'Set of two 65 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'70 LB Dumbbell',
-'Set of two 70 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'75 LB Dumbbell',
-'Set of two 75 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'80 LB Dumbbell',
-'Set of two 80 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'85 LB Dumbbell',
-'Set of two 85 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'90 LB Dumbbell',
-'Set of two 90 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-INSERT INTO items(item_name, item_desc, type, image_path) VALUES (
-'100 LB Dumbbell',
-'Set of two 100 pound dumbbells.',
-'Dumbbell',
-'images/weight_placeholder.jpg');
-
-DROP TABLE IF EXISTS inventory;
-
+-- Inventory Table (Enhanced)
 CREATE TABLE inventory (
     item_id INT PRIMARY KEY,
-    quantity INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 0,
+    low_stock_threshold INT NOT NULL DEFAULT 5,
     FOREIGN KEY (item_id) REFERENCES items(item_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+-- Users Table
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    address_line1 VARCHAR(255),
+    address_line2 VARCHAR(255),
+    city VARCHAR(100),
+    state VARCHAR(100),
+    postal_code VARCHAR(20),
+    country VARCHAR(100),
+    phone VARCHAR(50),
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP
+);
+
+-- Orders Table
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
+    shipping_address_line1 VARCHAR(255),
+    shipping_address_line2 VARCHAR(255),
+    shipping_city VARCHAR(100),
+    shipping_state VARCHAR(100),
+    shipping_postal_code VARCHAR(20),
+    shipping_country VARCHAR(100),
+    payment_method VARCHAR(50),
+    payment_status ENUM('pending', 'paid', 'failed', 'refunded') DEFAULT 'pending',
+    shipping_method VARCHAR(50),
+    shipping_cost DECIMAL(10,2) DEFAULT 0.00,
+    tax_amount DECIMAL(10,2) DEFAULT 0.00,
+    total_amount DECIMAL(10,2) NOT NULL,
+    notes TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
+
+-- Order Items Table
+CREATE TABLE order_items (
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    item_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price_per_unit DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES items(item_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+-- Carts Table
+CREATE TABLE carts (
+    cart_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    session_id VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    INDEX (session_id)  -- For anonymous carts
+);
+
+-- Cart Items Table
+CREATE TABLE cart_items (
+    cart_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    cart_id INT NOT NULL,
+    item_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cart_id) REFERENCES carts(cart_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES items(item_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    UNIQUE KEY (cart_id, item_id)  -- Prevent duplicate items in cart
+);
+
+-- Insert categories for weight types
+INSERT INTO categories (category_name) VALUES 
+('Weight Plates'),
+('Barbells'),
+('Accessories'),
+('Weight Sets'),
+('Dumbbells');
+
+-- Insert subcategories
+INSERT INTO categories (category_name, parent_category_id) VALUES 
+('Steel Plates', 1),
+('Bumper Plates', 1);
+
+-- Insert all original items with the enhanced schema
+INSERT INTO items(item_name, item_desc, type, category_id, image_path, price, is_active, weight) VALUES 
+-- Steel plates (category_id 6)
+('45 LB Plate', 'A set of two 45 pound steel weights.', 'Plate', 6, 'images/45lb_plate.jpeg', 89.99, TRUE, 90),
+('35 LB Plate', 'A set of two 35 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 69.99, TRUE, 70),
+('25 LB Plate', 'A set of two 25 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 49.99, TRUE, 50),
+('10 LB Plate', 'A set of two 10 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 29.99, TRUE, 20),
+('5 LB Plate', 'A set of two 5 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 19.99, TRUE, 10),
+('2.5 LB Plate', 'A set of two 2.5 pound steel weights.', 'Plate', 6, 'images/weight_placeholder.jpg', 14.99, TRUE, 5),
+
+-- Bumper plates (category_id 7)
+('45 LB Bumper Plate', '45 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/45lb_bumper.jpeg', 129.99, TRUE, 45),
+('35 LB Bumper Plate', '35 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/35lb_bumper.jpeg', 99.99, TRUE, 35),
+('25 LB Bumper Plate', '25 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/25lb_bumper.jpeg', 79.99, TRUE, 25),
+('10 LB Bumper Plate', '10 pound rubber coated bumper plate.', 'Bumper Plate', 7, 'images/weight_placeholder.jpg', 49.99, TRUE, 10),
+
+-- Bars (category_id 2)
+('45 LB Bar', '45 pound steel olympic barbell.', 'Bar', 2, 'images/weight_placeholder.jpg', 199.99, TRUE, 45),
+('35 LB Bar', '35 pound steel olympic barbell.', 'Bar', 2, 'images/weight_placeholder.jpg', 179.99, TRUE, 35),
+
+-- Accessories (category_id 3)
+('Barbell Clamp', 'Barbell clamp for olympic barbell', 'Clamp', 3, 'images/weight_placeholder.jpg', 19.99, TRUE, 1),
+
+-- Weight sets (category_id 4)
+('Olympic Weight Set', 'Comes with barbell and 2 steel plates.', 'Set', 4, 'images/complete_bb_set.jpeg', 299.99, TRUE, 235),
+('Complete Olympic Weight Set', 'Comes with barbell and a full set of steel weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/complete_bb_set.jpeg', 599.99, TRUE, 320),
+('Complete Bumper Plate Olympic Weight Set', 'Comes with barbell and a full set of bumper plate weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/complete_bumper_bb_set.jpeg', 899.99, TRUE, 320),
+('Dumbbell Weight Set', 'Steel dumbbell weight set. Includes 5-50 pounds (Optional rack).', 'Set', 4, 'images/5-50db.jpeg', 699.99, TRUE, 550),
+('Bumper Plate Set', 'Comes with barbell and 2 bumper plates.', 'Set', 4, 'images/weight_placeholder.jpg', 349.99, TRUE, 235),
+
+-- Dumbbells (category_id 5)
+('55 LB Dumbbell', 'Set of two 55 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 109.99, TRUE, 110),
+('60 LB Dumbbell', 'Set of two 60 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 119.99, TRUE, 120),
+('65 LB Dumbbell', 'Set of two 65 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 129.99, TRUE, 130),
+('70 LB Dumbbell', 'Set of two 70 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 139.99, TRUE, 140),
+('75 LB Dumbbell', 'Set of two 75 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 149.99, TRUE, 150),
+('80 LB Dumbbell', 'Set of two 80 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 159.99, TRUE, 160),
+('85 LB Dumbbell', 'Set of two 85 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 169.99, TRUE, 170),
+('90 LB Dumbbell', 'Set of two 90 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 179.99, TRUE, 180),
+('100 LB Dumbbell', 'Set of two 100 pound dumbbells.', 'Dumbbell', 5, 'images/weight_placeholder.jpg', 199.99, TRUE, 200);
+
+-- Add inventory for all items with default stock of 10 items each
+INSERT INTO inventory (item_id, quantity, low_stock_threshold)
+SELECT item_id, 10, 3 FROM items;
+
+-- Create a sample user
+INSERT INTO users (email, password_hash, first_name, last_name, is_admin) 
+VALUES ('admin@weightsstore.com', '$2y$10$example_hash_would_go_here', 'Admin', 'User', TRUE);
+
+-- Sample cart for this user
+INSERT INTO carts (user_id) VALUES (1);
+
+-- Add some items to the cart
+INSERT INTO cart_items (cart_id, item_id, quantity) VALUES 
+(1, 1, 2),  -- 2x 45lb plates
+(1, 4, 1);  -- 1x 45lb bar
