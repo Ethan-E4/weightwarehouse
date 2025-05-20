@@ -1,5 +1,6 @@
 <html>
 <head>
+    <title>Weight Warehouse - Gym Exercise Equipment</title>
     <style>
         /* Reset & global */
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,11 +64,24 @@
             transition: transform 0.3s ease;
         }
         .item-card:hover { transform: translateY(-5px); }
-        .item-image {
+
+        /* Image wrapper for fixed aspect ratio */
+        .image-wrapper {
+            position: relative;
             width: 100%;
-            height: 160px;
-            object-fit: cover;
+            padding-top: 75%; /* 4:3 aspect ratio */
+            background-color: #fff;
+            overflow: hidden;
         }
+        .item-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* preserve aspect ratio, show entire image */
+            background-color: #fff;
+        }
+
         .item-body {
             flex: 1;
             padding: 15px;
@@ -109,6 +123,12 @@
 </header>
 
 <?php
+// Session start for cart items
+session_start();
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = []; // blank array 
+}
+
 // DATABASE CONNECTION
 $host = '127.0.0.1';
 $db   = 'WEIGHTS';
@@ -168,9 +188,11 @@ if ($selectedType && in_array($selectedType, $typeList, true)) {
     <?php while ($item = $stmt->fetch()): ?>
         <a href="itemview.php?id=<?= $item['item_id'] ?>">
             <div class="item-card">
-                <img src="<?= htmlspecialchars($item['image_path']) ?>"
-                     alt="<?= htmlspecialchars($item['item_name']) ?>"
-                     class="item-image">
+                <div class="image-wrapper">
+                    <img src="<?= htmlspecialchars($item['image_path']) ?>"
+                         alt="<?= htmlspecialchars($item['item_name']) ?>"
+                         class="item-image">
+                </div>
                 <div class="item-body">
                     <h2><?= htmlspecialchars($item['item_name']) ?></h2>
                     <div class="price">$<?= number_format($item['price'],2) ?></div>
@@ -193,7 +215,6 @@ if ($selectedType && in_array($selectedType, $typeList, true)) {
     </div>
     &copy; <?= date('Y') ?> Weight Warehouse. All rights reserved.
 </footer>
-
 
 </body>
 </html>

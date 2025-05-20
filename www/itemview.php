@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Catalog</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,28 +35,31 @@
 
         /* Grid layout: two columns, image is fixed ratio container */
         .item-card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 6px 16px rgba(0,0,0,0.1);
             overflow: hidden;
+            flex-wrap: wrap;
+        }
+
+        .image-container {
+            flex: 1 1 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: #fff;
         }
 
         /* Left column: keep 4:3 */
-        .image-container {
-            position: relative;
-            width: 100%;
-            /* enforce 4:3 box */
-            padding-top: 75%; 
-            overflow: hidden;
-        }
         .image-container img {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            background-color: #fff;
         }
+  
 
         /* Right column: text details */
         .item-details {
@@ -104,7 +108,12 @@
     </form>
 
     <?php
-    // — your existing connection code —
+    // Session start for cart 
+    session_start();
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = []; // blank array 
+    }
+    
     $host = '127.0.0.1'; $db = 'WEIGHTS';
     $user = 'test_user'; $pass = 'password';
     $dsn = "mysql:host=$host;dbname=$db;charset=utf8";
