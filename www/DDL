@@ -1,14 +1,11 @@
 USE WEIGHTS;
 
 -- Drop tables in reverse order of dependencies
-DROP TABLE IF EXISTS cart_items;
-DROP TABLE IF EXISTS carts;
 DROP TABLE IF EXISTS order_items;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS inventory;
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS users;
 
 -- Categories Table
 CREATE TABLE categories (
@@ -46,25 +43,6 @@ CREATE TABLE inventory (
     FOREIGN KEY (item_id) REFERENCES items(item_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
-
--- Users Table
-CREATE TABLE users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    address_line1 VARCHAR(255),
-    address_line2 VARCHAR(255),
-    city VARCHAR(100),
-    state VARCHAR(100),
-    postal_code VARCHAR(20),
-    country VARCHAR(100),
-    phone VARCHAR(50),
-    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    last_login TIMESTAMP
 );
 
 -- Orders Table
@@ -106,35 +84,6 @@ CREATE TABLE order_items (
         ON UPDATE CASCADE
 );
 
--- Carts Table
-CREATE TABLE carts (
-    cart_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    session_id VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    INDEX (session_id)  -- For anonymous carts
-);
-
--- Cart Items Table
-CREATE TABLE cart_items (
-    cart_item_id INT AUTO_INCREMENT PRIMARY KEY,
-    cart_id INT NOT NULL,
-    item_id INT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1,
-    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (cart_id) REFERENCES carts(cart_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES items(item_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    UNIQUE KEY (cart_id, item_id)  -- Prevent duplicate items in cart
-);
-
 -- Insert categories for weight types
 INSERT INTO categories (category_name) VALUES 
 ('Weight Plates'),
@@ -174,7 +123,7 @@ INSERT INTO items(item_name, item_desc, type, category_id, image_path, price, is
 -- Weight sets (category_id 4)
 ('Olympic Weight Set', 'Comes with barbell and 2 steel plates.', 'Set', 4, 'images/full_plates.jpg', 299.99, TRUE, 235),
 ('Complete Olympic Weight Set', 'Comes with barbell and a full set of steel weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/complete_bb_set.jpeg', 599.99, TRUE, 320),
-('Complete Bumper Plate Olympic Weight Set', 'Comes with barbell and a full set of bumper plate weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/complete_bumper_bb_set.jpeg', 899.99, TRUE, 320),
+('Complete Bumper Plate Olympic Weight Set', 'Comes with barbell and a full set of bumper plate weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/bumper_set.jpg', 899.99, TRUE, 320),
 ('Dumbbell Weight Set', 'Steel dumbbell weight set. Includes 5-50 pounds (Optional rack).', 'Set', 4, 'images/5-50db_rack_2.jpg', 699.99, TRUE, 550),
 ('Bumper Plate Set', 'Comes with barbell and 2 bumper plates.', 'Set', 4, 'images/bumper_set.jpg', 349.99, TRUE, 235),
 
@@ -192,15 +141,3 @@ INSERT INTO items(item_name, item_desc, type, category_id, image_path, price, is
 -- Add inventory for all items with default stock of 10 items each
 INSERT INTO inventory (item_id, quantity, low_stock_threshold)
 SELECT item_id, 10, 3 FROM items;
-
--- Create a sample user
-INSERT INTO users (email, password_hash, first_name, last_name, is_admin) 
-VALUES ('admin@weightsstore.com', '$2y$10$example_hash_would_go_here', 'Admin', 'User', TRUE);
-
--- Sample cart for this user
-INSERT INTO carts (user_id) VALUES (1);
-
--- Add some items to the cart
-INSERT INTO cart_items (cart_id, item_id, quantity) VALUES 
-(1, 1, 2),  -- 2x 45lb plates
-(1, 4, 1);  -- 1x 45lb bar
