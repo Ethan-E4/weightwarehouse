@@ -14,18 +14,6 @@
     <p id="confirm-name"></p>
     <p id="confirm-email"></p>
     <p id="confirm-phone"></p>
-
-    <script>
-        // Function to get query parameters from URL
-        function getQueryParam(param) {
-            let params = new URLSearchParams(window.location.search);
-            return params.get(param);
-        }
-
-        // Display form data on the confirmation page
-        document.getElementById("confirm-name").textContent = "Name: " + getQueryParam("name");
-        document.getElementById("confirm-email").textContent = "Email: " + getQueryParam("email");
-        document.getElementById("confirm-phone").textContent = "Phone: " + getQueryParam("phone");
-    </script>
+    
 </body>
 </html>
