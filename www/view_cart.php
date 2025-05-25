@@ -53,11 +53,33 @@
         .buttons a:hover, .buttons button:hover {
             background-color: #1a252f;
         }
+        .cart-item form button {
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #2c3e50;
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .cart-item form button:hover {
+            background-color: #1a252f;
+        }
+
+        .cart-item form button.remove-btn {
+            background-color: #a94442;
+        }
+
+        .cart-item form button.remove-btn:hover {
+            background-color: #843534;
+        }
     </style>
 </head>
 <body>
 
-<h1>Your Shopping Cart</h1>
+<h1>Shopping Cart</h1>
 
 <?php
 session_start();
@@ -97,8 +119,9 @@ foreach ($_SESSION['cart'] as $id => $qty) {
                 <label for="qty">Qty:</label>
                 <input type="number" name="qty" value="<?= $qty ?>" min="1" required>
                 <button type="submit" name="update">Update</button>
-                <button type="submit" name="remove" style="background-color: red;">Remove</button>
+                <button type="submit" name="remove" class="remove-btn">Remove</button>
             </form>
+
         </div>
     </div>
 
@@ -109,7 +132,7 @@ foreach ($_SESSION['cart'] as $id => $qty) {
 <div class="buttons">
     <a href="index.php">Back to Shop</a>
     <form method="post" action="checkout.php" style="display: inline;">
-        <button type="submit">Checkout</button>
+        <button type="submit">Schedule Pickup</button>
     </form>
 </div>
 
