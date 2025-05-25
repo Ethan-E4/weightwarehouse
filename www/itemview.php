@@ -33,7 +33,6 @@
             background-color: #1a252f;
         }
 
-        /* Grid layout: two columns, image is fixed ratio container */
         .item-card {
             display: flex;
             background-color: #fff;
@@ -52,16 +51,13 @@
             background-color: #fff;
         }
 
-        /* Left column: keep 4:3 */
         .image-container img {
             max-width: 100%;
             max-height: 300px;
             object-fit: contain;
             background-color: #fff;
         }
-  
 
-        /* Right column: text details */
         .item-details {
             padding: 30px;
             display: flex;
@@ -83,9 +79,32 @@
             font-size: 15px;
             color: #555;
             line-height: 1.6;
+            margin-bottom: 20px;
         }
 
-        /* Responsive: stack on narrow screens */
+        .item-details form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-details select, .item-details button {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .item-details button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .item-details button:hover {
+            background-color: #1a252f;
+        }
+
         @media (max-width: 700px) {
             .item-card {
                 display: block;
@@ -97,57 +116,87 @@
                 padding: 20px;
             }
         }
+
+        .message {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3c763d;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
-
     <form method="post" class="back-button">
-        <input type="submit" value="Back to Listings">
+        <input type="submit" name="back" value="Back to Listings">
     </form>
 
-    <?php
-    // Session start for cart 
-    session_start();
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = []; // blank array 
-    }
-    
-    $host = '127.0.0.1'; $db = 'WEIGHTS';
-    $user = 'test_user'; $pass = 'password';
-    $dsn = "mysql:host=$host;dbname=$db;charset=utf8";
-    $pdo = new PDO($dsn, $user, $pass, [
-        PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
-    ]);
-
-    if (!isset($_GET['id'])||!is_numeric($_GET['id'])) exit('Invalid item ID.');
-    $stmt = $pdo->prepare("SELECT item_name,item_desc,image_path,price FROM items WHERE item_id = :id");
-    $stmt->execute(['id'=>$_GET['id']]);
-    $item = $stmt->fetch() ?: exit('Item not found.');
-
-    // — new markup structure —
-    echo "<div class='item-card'>";
-      // image column
-      echo "<div class='image-container'>";
-        echo "<img src='".htmlspecialchars($item['image_path'])."' alt='".htmlspecialchars($item['item_name'])."'>";
-      echo "</div>";
-      // details column
-      echo "<div class='item-details'>";
-        echo "<h1>".htmlspecialchars($item['item_name'])."</h1>";
-        echo "<div class='price'>$".number_format($item['price'],2)."</div>";
-        echo "<div class='description'>".nl2br(htmlspecialchars($item['item_desc']))."</div>";
-      echo "</div>";
-    echo "</div>";
-    ?>
-</div>
 
 <?php
-if ($_SERVER['REQUEST_METHOD']==='POST') {
+session_start();
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['back'])) {
     header('Location: index.php');
     exit;
 }
+
+$host = '127.0.0.1'; $db = 'WEIGHTS';
+$user = 'test_user'; $pass = 'password';
+$dsn = "mysql:host=$host;dbname=$db;charset=utf8";
+$pdo = new PDO($dsn, $user, $pass, [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+]);
+
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) exit('Invalid item ID.');
+$id = (int)$_GET['id'];
+
+$stmt = $pdo->prepare("SELECT item_name,item_desc,image_path,price FROM items WHERE item_id = :id");
+$stmt->execute(['id' => $id]);
+$item = $stmt->fetch() ?: exit('Item not found.');
+
+// Handle form submission for add-to-cart
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quantity']) && is_numeric($_POST['quantity'])) {
+    $qty = (int)$_POST['quantity'];
+    if ($qty > 0) {
+        if (isset($_SESSION['cart'][$id])) {
+            $_SESSION['cart'][$id] += $qty;
+        } else {
+            $_SESSION['cart'][$id] = $qty;
+        }
+        echo "<div class='message'>Added $qty item(s) to cart.</div>";
+    }
+}
+
+echo "<div class='item-card'>";
+    echo "<div class='image-container'>";
+        echo "<img src='".htmlspecialchars($item['image_path'])."' alt='".htmlspecialchars($item['item_name'])."'>";
+    echo "</div>";
+    echo "<div class='item-details'>";
+        echo "<h1>".htmlspecialchars($item['item_name'])."</h1>";
+        echo "<div class='price'>$".number_format($item['price'], 2)."</div>";
+        echo "<div class='description'>".nl2br(htmlspecialchars($item['item_desc']))."</div>";
+
+        // Add-to-cart form
+        echo "<form method='post'>";
+            echo "<label for='quantity'>Qty:</label>";
+            echo "<select name='quantity' id='quantity'>";
+            for ($i = 1; $i <= 10; $i++) {
+                echo "<option value='$i'>$i</option>";
+            }
+            echo "</select>";
+            echo "<button type='submit'>Add to Cart</button>";
+        echo "</form>";
+    echo "</div>";
+echo "</div>";
 ?>
+</div>
+
 </body>
 </html>

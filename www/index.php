@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Weight Warehouse - Gym Exercise Equipment</title>
     <style>
@@ -119,14 +120,20 @@
 <body>
 
 <header>
-    <h1>Weight Warehouse</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Weight Warehouse</h1>
+        <a href="view_cart.php" style="color: #fff; position: relative; margin-right: 10px;">
+            <img src="images/icons8-cart-24.png" alt="Cart" style="width: 24px; height: 24px;">
+        </a>
+
+    </div>
 </header>
 
 <?php
 // Session start for cart items
 session_start();
 if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = []; // blank array 
+    $_SESSION['cart'] = []; // blank array
 }
 
 // DATABASE CONNECTION
