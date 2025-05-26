@@ -122,7 +122,7 @@ INSERT INTO items(item_name, item_desc, type, category_id, image_path, price, is
 
 -- Weight sets (category_id 4)
 ('Olympic Weight Set', 'Comes with barbell and 2 steel plates.', 'Set', 4, 'images/full_plates.jpg', 299.99, TRUE, 235),
-('Complete Olympic Weight Set', 'Comes with barbell and a full set of steel weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/complete_bb_set.jpeg', 599.99, TRUE, 320),
+('Complete Olympic Weight Set', 'Comes with barbell and a full set of steel weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/weight_placeholder.jpg', 599.99, TRUE, 320),
 ('Complete Bumper Plate Olympic Weight Set', 'Comes with barbell and a full set of bumper plate weights. 2.5lbs, 5lbs, 10lbs, 25lbs, 35lbs, 45lbs.', 'Set', 4, 'images/bumper_set.jpg', 899.99, TRUE, 320),
 ('Dumbbell Weight Set', 'Steel dumbbell weight set. Includes 5-50 pounds (Optional rack).', 'Set', 4, 'images/5-50db_rack_2.jpg', 699.99, TRUE, 550),
 ('Bumper Plate Set', 'Comes with barbell and 2 bumper plates.', 'Set', 4, 'images/bumper_set.jpg', 349.99, TRUE, 235),
