@@ -1,4 +1,7 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'vendor/autoload.php';
 session_start();
 
 if (
@@ -52,6 +55,68 @@ try {
     }
 
     $totalPrice = array_sum(array_column($items, 'subtotal'));
+
+// Compose the email content
+ob_start(); // Start output buffering to capture HTML
+?>
+<h1>Order Confirmation</h1>
+<p>Thank you, <?= htmlspecialchars($pickup['first_name']) ?>!</p>
+<p>Your pickup is scheduled for <strong><?= htmlspecialchars($pickup['pickup_date']) ?></strong>.</p>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse;">
+    <thead style="background: #2c3e50; color: white;">
+        <tr>
+            <th>Item Name</th>
+            <th>Unit Price ($)</th>
+            <th>Quantity</th>
+            <th>Subtotal ($)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($items as $item): ?>
+            <tr>
+                <td><?= htmlspecialchars($item['item_name']) ?></td>
+                <td><?= number_format($item['price'], 2) ?></td>
+                <td><?= $item['quantity'] ?></td>
+                <td><?= number_format($item['subtotal'], 2) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        <tr>
+            <td colspan="3"><strong>Total</strong></td>
+            <td><strong>$<?= number_format($totalPrice, 2) ?></strong></td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<a href="localhost:8000/www/pickup_policy.php">Questions on our pickup policy click here.</a>
+<p>For other questions reply.</p>
+<?php
+$emailBody = ob_get_clean(); // Get the buffer contents and clean it
+
+// Send the email
+try {
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'ethanespineli04@gmail.com';
+    $mail->Password   = 'oife cuxg sfst ydgj'; // use secure environment variable 
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port       = 465;
+
+    $mail->setFrom('ethanespineli04@gmail.com', 'Weight Warehouse');
+    $mail->addAddress($pickup['email']);
+    $mail->addReplyTo('ethanespineli04@gmail.com', 'Order Support');
+    $mail->addBCC(address:'ethanespineli04@gmail.com'); // Change blind copy to sean
+    $mail->isHTML(true);
+    $mail->Subject = 'Your Weight Order Confirmation';
+    $mail->Body    = $emailBody;
+
+    $mail->send();
+} catch (Exception $e) {
+    error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
+}
+
+
 
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
@@ -162,6 +227,7 @@ try {
         Thank you, <?= htmlspecialchars($pickup['first_name']) ?>!<br>
         Your pickup is scheduled for <strong><?= htmlspecialchars($pickup['pickup_date']) ?></strong>.<br>
         A receipt will be sent to <strong><?= htmlspecialchars($pickup['email']) ?></strong>.
+        Be sure to check spam folder.
     </div>
 </div>
 
