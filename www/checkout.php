@@ -103,6 +103,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
         .buttons button:hover {
             background: #1a252f;
         }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            background-color: #1a252f;
+        }
+
         .errors {
             background: #f8d7da;
             border-left: 4px solid #a94442;
@@ -114,6 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
     </style>
 </head>
 <body>
+
+<a href="view_cart.php" class="back-button">← Back to Cart</a>
+
 <div class="container">
     <h1>Schedule Pickup</h1>
 
@@ -157,7 +174,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
         <div class="buttons">
             <button type="submit">Submit</button>
         </div>
-    </form>
+
+  /form>
 </div>
+
+
 </body>
 </html>
