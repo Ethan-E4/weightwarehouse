@@ -217,7 +217,7 @@ if ($selectedType && in_array($selectedType, $typeList, true)) {
 <footer>
     <div style="margin-bottom: 10px;">
         <a href="about.php" style="color: #fff; margin: 0 10px;">About Us</a> |
-        <a href="contact.php" style="color: #fff; margin: 0 10px;">Contact Us</a> |
+        <a href="contact-us.php" style="color: #fff; margin: 0 10px;">Contact Us</a> |
         <a href="pickup-policy.php" style="color: #fff; margin: 0 10px;">Pickup Policy</a>
     </div>
     &copy; <?= date('Y') ?> Weight Warehouse. All rights reserved.
