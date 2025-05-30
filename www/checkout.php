@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             <button type="submit">Submit</button>
         </div>
 
-  /form>
+        </form>
 </div>
 
 

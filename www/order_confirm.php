@@ -110,9 +110,26 @@ try {
             border-radius: 5px;
             color: #155724;
         }
+        .back-store-button {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 15px;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .back-store-button:hover {
+            background-color: #1a252f;
+        }
+
     </style>
 </head>
 <body>
+
+<a href="index.php" class="back-store-button">← Back to Store</a>
+
 <div class="container">
     <h1>Order Confirmation</h1>
 
